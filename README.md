@@ -4,41 +4,59 @@ CASCON 2017 Workshop Tutorial
 ## Overview
 This is a tutorial for LoopBack 4 that will show you how to get started creating LoopBack 4 Applications. This will be presented at CASCON 2017. The application we'll be creating is a simple Diary application to write your daily thoughts but we'll get a tone analysis from [Watson Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/) for each diary entry to understand your mood and to be able to search for entries by mood.
 
-## Tutorial - Step 01 - Project setup
-1. We're going to start by creating a new directory for our project. Let's call this `cascon-diary`. *This will be referred to as the __project directory__.* You can do so by running the following command:
+## Tutorial - Step 02 - Hello World
+1. Now we're ready to start writing some code. Let's start with a simple Hello LoopBack application. We'll start by creating a file called `index.ts` in our project directory.
 
- `mkdir cascon-diary`
-
-2. Now enter our directory and initialize `npm` in it by running the following commands. __NOTE:__ You will be prompted by a series of questions with a corresponding __default__ answer in `( )`. We will stick with the default answers for all questions except:
- - __main__: `dist/index.js`
-
- ```
- cd cascon-diary
- npm init
- ```
-
-3. Next we'll install our dependencies for the project (LoopBack 4). We'll also install the type definitions for node as a devDependency.
+2. Open the file in your favorite text editor. We'll start by importing in our dependencies as follows:
 
 ```
-npm i @loopback/core @loopback/rest @loopback/context
-npm i --save-dev @types/node
+// Application is a top-level container for our app
+import {Application} from '@loopback/core';
+// RestComponent - provides us with a RestServer (HTTP Protocol) 
+// get - HTTP GET Request Decorator
+import {RestComponent, get} from '@loopback/rest'
 ```
 
-4. Since we’re using TypeScript we’ll also need to configure some options for it. In our project directory we’ll create a file called `tsconfig.json` and paste the following into it.
+3. Now we'll define a controller class that is responsible for receives a request and creates a response. A simple hello world controller looks as follows:
 
 ```
-{
-  "compilerOptions": {
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "target": "es2017",
-    "outDir": "dist",
-    "sourceMap": true,
-    "declaration": true
+class DiaryController {
+  @get("/")
+  helloWorld() {
+    return "Hello LoopBack";
   }
 }
 ```
 
-__Congrats! You've completed Step 1 - Project Setup.__ Move on to step 2 by [clicking here](https://github.com/virkt25/cascon-2017/tree/step-02).
+4. Next we'll create a new class that extends Application. Here we'll set our controller and the `RestComponent` as follows:
+
+```
+class DiaryApp extends Application {
+  constructor() {
+    super({
+      components: [RestComponent]
+    });
+
+    this.controller(DiaryController); // Have DiaryApp use the DiaryController. An app can have multiple controllers
+  }
+}
+```
+
+5. Last but not least, we'll create an instance of our `DiaryApp` and start it as follows:
+
+```
+const app = new DiaryApp();
+app.start();
+```
+
+## Running you application
+1. Now we can run our application to test it by going to `terminal` and running the following command:
+
+```
+npm start
+```
+
+2. The server will start with a default port of `3000`. If you visit `localhost:3000` from your browser, you should see `Hello LoopBack`.
+
+## Next Steps
+__Congrats! You've completed Step 2 - Hello World.__ Move on to step 3 by [clicking here](https://github.com/virkt25/cascon-2017/tree/step-03).
