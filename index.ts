@@ -1,22 +1,16 @@
-import { Application } from "@loopback/core";
-import { RestComponent, get } from "@loopback/rest";
+import {DiaryApp} from './src/app';
+import {RestServer} from '@loopback/rest';
 
-class DiaryController {
-  @get("/")
-  helloWorld() {
-    return "Hello LoopBack";
-  }
-}
+(async function main() {
+  const app = new DiaryApp();
 
-class DiaryApp extends Application {
-  constructor() {
-    super({
-      components: [RestComponent]
-    });
+  await app.start().catch(err => {
+    console.error('Cannot start the application! ', err);
+    process.exit(1);
+  });
 
-    this.controller(DiaryController);
-  }
-}
+  const server = await app.getServer(RestServer);
+  const port = await server.get('rest.port');
 
-const app = new DiaryApp();
-app.start();
+  console.log(`Application started at localhost:${port}`);
+})();
