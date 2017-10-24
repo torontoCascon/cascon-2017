@@ -92,7 +92,7 @@ import {BindingScope} from '@loopback/context';
 import {DiaryDataStore} from './datastores/diary.datastore';
 ```
 
-8. Now we'll bind the `DiaryDataStore` to a key `datastores.diary` in teh constructor by adding the following line:
+8. Now we'll bind the `DiaryDataStore` to a key `datastores.diary` in the constructor by adding the following line:
 
 ```ts
 this.bind('datastores.diary').toClass(DiaryDataStore).inScope(BindingScope.SINGLETON);
