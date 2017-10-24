@@ -9,7 +9,7 @@ This is a tutorial for LoopBack 4 that will show you how to get started creating
 
 2. Open the file in your favorite text editor. We'll start by importing in our dependencies as follows:
 
-```
+```ts
 // Application is a top-level container for our app
 import {Application} from '@loopback/core';
 // RestComponent - provides us with a RestServer (HTTP Protocol) 
@@ -19,7 +19,7 @@ import {RestComponent, get} from '@loopback/rest'
 
 3. Now we'll define a controller class that is responsible for receives a request and creates a response. A simple hello world controller looks as follows:
 
-```
+```ts
 class DiaryController {
   @get("/")
   helloWorld() {
@@ -30,7 +30,7 @@ class DiaryController {
 
 4. Next we'll create a new class that extends Application. Here we'll set our controller and the `RestComponent` as follows:
 
-```
+```ts
 class DiaryApp extends Application {
   constructor() {
     super({
@@ -44,7 +44,7 @@ class DiaryApp extends Application {
 
 5. Last but not least, we'll create an instance of our `DiaryApp` and start it as follows:
 
-```
+```ts
 const app = new DiaryApp();
 app.start();
 ```
@@ -52,7 +52,7 @@ app.start();
 ## Running you application
 1. Now we can run our application to test it by going to `terminal` and running the following command:
 
-```
+```sh
 npm start
 ```
 
