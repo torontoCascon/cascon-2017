@@ -7,7 +7,7 @@ This is a tutorial for LoopBack 4 that will show you how to get started creating
 ## Tutorial - Step 03 - Refactoring
 1. Writing code in a single file gets messy fast. Before it gets to that point, we're going to refactor our application to follow some best practices. We'll start by creating a `src` directory in our project directory.
 
-```
+```sh
 mkdir src
 ```
 
@@ -15,7 +15,7 @@ mkdir src
 
 3. In `/src/controllers` we'll make a file called `diary.controller.ts`. Now we'll copy our controller class from `index.ts` into this file and import it's dependencies. __NOTE:__ We now export the class since it's in a different file. The file should look as follows:
 
-```
+```ts
 import {get} from '@loopback/rest';
 
 export class DiaryController {
@@ -28,7 +28,7 @@ export class DiaryController {
 
 4. Now in `/src` directory we'll create a new file called `app.ts`. In it we'll copy our `DiaryApp` class, import it's dependencies and export the class. The file should look as follows:
 
-```
+```ts
 import {Application} from '@loopback/core';
 import {RestComponent} from '@loopback/rest';
 import {DiaryController} from './controllers/diary.controller';
@@ -46,7 +46,7 @@ export class DiaryApp extends Application {
 
 5. Now last but not least, we'll update `index.ts` in the project directory. Here you can delete the `DiaryController` and `DiaryApp` class if you haven't already. Now we'll import these from their new files. We'll also write a new `main` function to start an instance of our `DiaryApp`. The contents of the file should look as follows:
 
-```
+```ts
 import {DiaryApp} from './src/app';
 import {RestServer} from '@loopback/rest';
 
@@ -71,7 +71,7 @@ import {RestServer} from '@loopback/rest';
 ## Running you application
 1. If you have the previous version running, press `Ctrl + C` in the `terminal` to stop the app. Now we can restart our application by running the following command in `terminal`:
 
-```
+```sh
 npm start
 ```
 
