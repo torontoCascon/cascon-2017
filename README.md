@@ -19,14 +19,20 @@ cd cascon-diary
 npm init
 ```
 
-3. Next we'll install our dependencies for the project (LoopBack 4). We'll also install the type definitions for node as a devDependency.
+3. We will add a `start` script so we can easily compile and run our program. In `package.json`, under the `scripts` section, add the following line:
+
+```json
+"start": "tsc && node ."
+```
+
+4. Next we'll install our dependencies for the project (LoopBack 4). We'll also install the type definitions for node as a devDependency.
 
 ```sh
 npm i @loopback/core @loopback/rest @loopback/context
 npm i --save-dev @types/node
 ```
 
-4. Since we’re using TypeScript we’ll also need to configure some options for it. In our project directory we’ll create a file called `tsconfig.json` and paste the following into it.
+5. Since we’re using TypeScript we’ll also need to configure some options for it. In our project directory we’ll create a file called `tsconfig.json` and paste the following into it.
 
 ```json
 {
