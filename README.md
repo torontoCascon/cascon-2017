@@ -15,7 +15,7 @@ npm i -g typescript
 ```
 
 ## Tutorial
-The `master` branch represents the complete and functioning version of the tutoria. To run it you would just need to add a file called `creds.ts` as specified in `step-05` branch.
+The `master` branch represents the complete and functioning version of the tutorial. To run it you would just need to add a file called `creds.ts` as specified in `step-05` branch.
 
 You can follow along this tutorial step by step by switching between the different step branches.
 
