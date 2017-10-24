@@ -9,7 +9,7 @@ The `master` branch represents the complete and functioning version of the tutor
 
 You should have the following packages dependencies install globally to follow along with this tutorial:
 
-- Node 8.X.X [Installer](https://nodejs.org/en/download/current/)
+- Node 8.X.X [(Installer)](https://nodejs.org/en/download/current/)
 - TypeScript 2.5 (you can install by running the following command after installing Node):
 
 ```
