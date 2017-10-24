@@ -12,7 +12,7 @@ mkdir cascon-diary
  ```
 
 2. Now enter our directory and initialize `npm` in it by running the following commands. __NOTE:__ You will be prompted by a series of questions with a corresponding __default__ answer in `( )`. We will stick with the default answers for all questions except:
- - __main__: `dist/index.js`
+ - __entry point: (index.js)__: `dist/index.js`
 
 ```sh
 cd cascon-diary
