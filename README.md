@@ -138,7 +138,7 @@ getDiaryById(id: number): Diary {
 // Create New Diary Entry
 @post('/')
 @param.body('diary', diarySchema) // User should provide us JSON matching this schema we defined earlier
-createDiary(diary: diarySchema): Diary {
+createDiary(diary: any): Diary {
   return this.diaryStore.createDiary(diary);
 }
 
