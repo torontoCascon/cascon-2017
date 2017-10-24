@@ -3,17 +3,46 @@ import {inject} from '@loopback/core';
 import {ServerResponse} from 'http';
 import {Diary, diarySchema} from '../types';
 import {DiaryDataStore} from '../datastores/diary.datastore';
+import {Promise} from 'bluebird';
+import {ToneAnalyzerV3} from 'watson-developer-cloud';
 
 export class DiaryController {
+  tone_analyzer: any;
+
   constructor(
     @inject('datastores.diary') public diaryStore: DiaryDataStore,
     @inject(RestBindings.Http.RESPONSE) public res: ServerResponse,
-  ) {}
+    @inject('tone_analyzer.username') username: string,
+    @inject('tone_analyzer.password') password: string,
+    @inject('tone_analyzer.version') version: string,
+  ) {
+    this.tone_analyzer = new ToneAnalyzerV3({
+      username: username,
+      password: password,
+      version_date: version,
+    });
+
+    this.tone_analyzer.tone = Promise.promisify(this.tone_analyzer.tone);
+  }
 
   // Get all diary entries from datasource
   @get('/')
-  getDiaries(): Diary[] {
-    return this.diaryStore.getDiaries();
+  @param.query.string('tone')
+  getDiaries(tone?: string): Diary[] {
+    const diaries = this.diaryStore.getDiaries();
+    if (!tone) return diaries;
+
+    tone = tone.toLowerCase();
+    let result: any = [];
+    for (const diary of diaries) {
+      for (const diaryTone of diary.tones) {
+        if (diaryTone.tone_name.toLowerCase() === tone) {
+          result.push(diary);
+          break;
+        }
+      }
+    }
+    return result;
   }
 
   // Get Diary Entry for given ID
@@ -25,8 +54,11 @@ export class DiaryController {
 
   // Create New Diary Entry
   @post('/')
-  @param.body('diary', diarySchema) // User should provide us JSON matching this schema we defined earlier
-  createDiary(diary: any): Diary {
+  @param.body('diary', diarySchema)
+  async createDiary(diary: any) {
+    const tone = await this.tone_analyzer.tone({text: diary.body});
+    diary.tones = tone.document_tone.tones;
+
     return this.diaryStore.createDiary(diary);
   }
 

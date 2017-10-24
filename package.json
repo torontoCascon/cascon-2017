@@ -26,7 +26,11 @@
     "@loopback/context": "^4.0.0-alpha.14",
     "@loopback/core": "^4.0.0-alpha.16",
     "@loopback/openapi-spec": "^4.0.0-alpha.10",
-    "@loopback/rest": "^4.0.0-alpha.3"
+    "@loopback/rest": "^4.0.0-alpha.3",
+    "@types/bluebird": "^3.5.16",
+    "@types/watson-developer-cloud": "^2.40.0",
+    "bluebird": "^3.5.1",
+    "watson-developer-cloud": "^2.41.1"
   },
   "devDependencies": {
     "@types/node": "^8.0.46"

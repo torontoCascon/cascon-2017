@@ -5,6 +5,13 @@ export type Diary = {
   title: string;
   post: string;
   id: number;
+  tones: Tone[];
+};
+
+export type Tone = {
+  score: number;
+  tone_id: string;
+  tone_name: string;
 };
 
 // Diary Schema Object for incoming requests

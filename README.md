@@ -4,152 +4,126 @@ CASCON 2017 Workshop Tutorial
 ## Overview
 This is a tutorial for LoopBack 4 that will show you how to get started creating LoopBack 4 Applications. This will be presented at CASCON 2017. The application we'll be creating is a simple Diary application to write your daily thoughts but we'll get a tone analysis from [Watson Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/) for each diary entry to understand your mood and to be able to search for entries by mood.
 
-## Tutorial - Step 04 - Basic Diary Application
-1. Let's start making a basic version of our __Diary Application__. Let's start by defining what our `Diary` will look like. Make a file called `types.ts` in the `/src` directory. 
-
-2. In `types.ts` we'll define a `Diary` type and export it. A diary entry will have a `title`, `post`, and an `id`. We can define this as follows:
+## Tutorial - Step 05 - Making it Cognitive
+1. We have some basic APIs but there's nothing cognitive about it. We'll add in the last piece now which is Watson Tone Analyzer. We'll need to install a few new packages by running the following command in `terminal`:
 
 ```
-// Diary entry type
-export type Diary = {
-  title: string;
-  post: string;
-  id: number;
+npm i watson-developer-cloud bluebird @types/watson-developer-cloud @types/bluebird
+```
+
+2. Next we'll need to create a type for our `Tone` in `/src/types.ts` as follows:
+
+```
+export type Tone = {
+  score: number;
+  tone_id: string;
+  tone_name: string;
 };
 ```
 
-3. We'll also need to define a `SchemaObject` which explains the __Request__ parameters as per the OpenAPI Specification. So we'll import the `SchemaObject` type from `@loopback/openapi-spec` at the top of our file. Then below our `Diary` type definition, we'll define our `SchemaObject` as follows:
+3. Now for each `Diary` entry we'll store an array of `Tone`s that we get back from the __ToneAnalyzer__ by adding the following property to the type definition for `Diary`:
 
 ```
-import {SchemaObject} from '@loopback/openapi-spec';
+tones: Tone[];
+```
 
-// Diary entry type BELOW... 
-// ... 
+4. Now to use __ToneAnalyzer__ we'll need credentials. You can do so by signing up for the free instance on [Bluemix](https://www.bluemix.net). __NOTE:__ CASCON attendees will find a file on their desktop called `creds.ts`. You should copy & paste this into your project directory. You can now move on to step 5.
 
-// Diary Schema Object for incoming requests.
-// Similar to our type object but type defined as a property (vs typescript type)
-export const diarySchema: SchemaObject = {
-  properties: {
-    title: {
-      type: 'string',
-    },
-    post: {
-      type: 'string',
-    },
-  },
+ - *For those following along at home, create a file in the project directory called `creds.ts` with the following contents. Update credentials to your own.*
+
+```
+export const creds = {
+  url: 'https://gateway.watsonplatform.net/tone-analyzer/api',
+  username: '<YOUR USERNAME>',
+  password: '<YOUR PASSWORD>',
+  version: '<LATEST WATSON VERSION DATE (ex: 2017-09-21)>'
 };
 ```
 
-4. If you recall, we don't actually have `@loopback/openapi-spec` installed. So before we forget let's install that by running the following command in `terminal`:
+5. Now we will bind our credentials so they can be injected into our controller. We'll start by importing `creds` in `app.ts` as follows:
 
 ```
-npm i @loopback/openapi-spec
+// Add at top of app.ts
+import {creds} from '../creds';
 ```
 
-5. Now we need a way to save and retrieve our Diary entries. Let's make a class to store our data. We can call this our DataStore. *For this tutorial we'll store the information in memory but in production this should be stored in a database*. Start by making a `datastores` directory in the `/src` directory.
+6. Now we'll bind the credentials by adding the following 3 lines below our other bindings in `app.ts`. 
 
 ```
-mkdir datastores
+this.bind('tone_analyzer.username').to(creds.username);
+this.bind('tone_analyzer.password').to(creds.password);
+this.bind('tone_analyzer.version').to(creds.version);
 ```
 
-6. In the `datastores` directory, we'll create a file called `diary.datastore.ts`. In this file we'll make a class that will allow us to save and retrieve diary entries as follows:
-
-```ts
-import {Diary} from '../types';
-
-export class DiaryDataStore {
-  diaries: {[key: number]: Diary};
-  id: number;
-  constructor() {
-    this.diaries = {}; // We will store our entries in an object for quick operations
-    this.id = 1; // We'll increment this to create id for new entries
-  }
-
-  // This method will return to us all Diary entries in an array
-  getDiaries(): Diary[] {
-    return Object.values(this.diaries);
-  }
-
-  // We retrieve a Diary entry with the given id
-  getDiaryById(id: number): Diary {
-    return this.diaries[id];
-  }
-
-  // We assign an id and save the diary here
-  createDiary(diary: any): Diary {
-    diary.id = this.id;
-    this.diaries[this.id] = diary;
-    this.id++;
-    return diary;
-  }
-}
-```
-
-7. Now before we can start using our Diary DataStore, we need to bind it as a Singleton (so multiple requests have the same instance). We'll do this in `/src/app.ts`. Lets start by importing `DiaryDataStore`. We'll also import a `BindingScope` object which defines constants for different Binding Scopes. So lets add the following 2 lines at the top of our file:
+7. Now the last file we need to update is going to be our controller. Let's start by importing `ToneAnalyzerV3` and `Promise` by adding the following lines at the top of our file:
 
 ```
-import {BindingScope} from '@loopback/context';
-import {DiaryDataStore} from './datastores/diary.datastore';
+import {Promise} from 'bluebird';
+import {ToneAnalyzerV3} from 'watson-developer-cloud';
 ```
 
-8. Now we'll bind the `DiaryDataStore` to a key `datastores.diary` in teh constructor by adding the following line:
-
-```
-this.bind('datastores.diary').toClass(DiaryDataStore).inScope(BindingScope.SINGLETON);
-```
-
-9. Last thing left to update is our `diary.controller.ts`. We'll start by importing our newly created types. To be able to use Dependency Injection we'll also need `inject` from `@loopback/core`. Lastly we'll be creating a POST and OPTIONS request as well so we'll import `post, operation, param, RestBindings` from `@loopback/rest` as well. `RestBindings` gives us access to CONSTANT keys defined by the `rest` package. Your imports should look as follows:
-
-```
-import {get, post, param, operation, RestBindings} from '@loopback/rest';
-import {inject} from '@loopback/core';
-import {ServerResponse} from 'http';
-import {Diary, diarySchema} from '../types';
-import {DiaryDataStore} from '../datastores/diary.datastore';
-```
-
-10. Now we'll need to write a constructor since we'll be using Dependecy Injection to inject our DataStore as well as the ServerResponse Object into our controller class as follows:
+8. Next we'll declare a `tone_analyzer` property on our class of type `any`. 
 
 ```
 export class DiaryController {
-  constructor(
-    @inject('datastores.diary') public diaryStore: DiaryDataStore,
-    @inject(RestBindings.Http.RESPONSE) public res: ServerResponse
-  ) {}
+  // Add property line here
+  tone_analyzer: any;
 }
 ```
 
-11. Now we can delete the `helloWorld` method and write some new methods for our Diaries as follows:
+9. Now in our constructor, we'll inject our credentials and initialize an instance of `ToneAnalyzerV3` as well as promisify the `tone` function. The constructor should look as follows:
 
 ```
-// Get all diary entries from datasource
-@get('/')
-getDiaries(): Diary[] {
-  return this.diaryStore.getDiaries();
-}
+constructor(
+  @inject('datastores.diary') public diaryStore: DiaryDataStore,
+  @inject(RestBindings.Http.RESPONSE) public res: ServerResponse,
+  @inject('tone_analyzer.username') username: string,
+  @inject('tone_analyzer.password') password: string,
+  @inject('tone_analyzer.version') version: string,
+) {
+  this.tone_analyzer = new ToneAnalyzerV3({
+    username: username,
+    password: password,
+    version_date: version,
+  });
 
-// Get Diary Entry for given ID
-@get('/{id}')
-@param.path.number('id')
-getDiaryById(id: number): Diary {
-  return this.diaryStore.getDiaryById(id);
+  this.tone_analyzer.tone = Promise.promisify(this.tone_analyzer.tone);
 }
+```
 
-// Create New Diary Entry
-@post('/')
-@param.body('diary', diarySchema) // User should provide us JSON matching this schema we defined earlier
-createDiary(diary: diarySchema): Diary {
+10. Now we analyze all posts before saving them by updating our `createDiary` method as follows:
+
+```
+@post("/")
+@param.body("diary", diarySchema)
+async createDiary(diary: any) {
+  const tone = await this.tone_analyzer.tone({ text: diary.body });
+  diary.tones = tone.document_tone.tones;
+
   return this.diaryStore.createDiary(diary);
 }
+```
 
-// Options request for pre-flight requests. This is needed for CORS for when we test our API's.
-@operation('OPTIONS', '/')
-optionsHeader() {
-  this.res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  this.res.setHeader(
-    'Access-Control-Allow-Headers',
-    'Content-Type, Access-Control-Allow-Headers',
-  );
+11. The final change we'll make is to let users filter by providing an optional query parameter called `tone` for our `getDiaries` method. If present, we'll filter all diary entries and only return ones which have the requested tone. Here's what this will look like:
+
+```
+@get('/')
+@param.query.string('tone')
+getDiaries(tone?: string): Diary[] {
+  const diaries = this.diaryStore.getDiaries();
+  if (!tone) return diaries;
+
+  tone = tone.toLowerCase();
+  let result: any = [];
+  for (const diary of diaries) {
+    for (const diaryTone of diary.tones) {
+      if (diaryTone.tone_name.toLowerCase() === tone) {
+        result.push(diary);
+        break;
+      }
+    }
+  }
+  return result;
 }
 ```
 
@@ -165,4 +139,4 @@ npm start
 3. Visit `localhost:3000/swagger-ui` to be able to see a Swagger Docs interface that will let you try out any of the requests.
 
 ## Next Steps
-__Congrats! You've completed Step 4 - Basic Diary Application.__ Move on to step 5 by [clicking here](https://github.com/virkt25/cascon-2017/tree/step-05).
+__Congrats! You've completed Step 5 - Making it Cognitive.__ You're done! 
