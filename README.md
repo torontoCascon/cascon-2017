@@ -7,15 +7,17 @@ This is a tutorial for LoopBack 4 that will show you how to get started creating
 ## Tutorial - Step 01 - Project setup
 1. We're going to start by creating a new directory for our project. Let's call this `cascon-diary`. *This will be referred to as the __project directory__.* You can do so by running the following command:
 
- `mkdir cascon-diary`
+```sh
+mkdir cascon-diary
+ ```
 
 2. Now enter our directory and initialize `npm` in it by running the following commands. __NOTE:__ You will be prompted by a series of questions with a corresponding __default__ answer in `( )`. We will stick with the default answers for all questions except:
  - __main__: `dist/index.js`
 
- ```
- cd cascon-diary
- npm init
- ```
+```sh
+cd cascon-diary
+npm init
+```
 
 3. Next we'll install our dependencies for the project (LoopBack 4). We'll also install the type definitions for node as a devDependency.
 
