@@ -25,6 +25,7 @@
   "dependencies": {
     "@loopback/context": "^4.0.0-alpha.14",
     "@loopback/core": "^4.0.0-alpha.16",
+    "@loopback/openapi-spec": "^4.0.0-alpha.10",
     "@loopback/rest": "^4.0.0-alpha.3"
   },
   "devDependencies": {
