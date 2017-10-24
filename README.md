@@ -97,7 +97,7 @@ constructor(
 @post("/")
 @param.body("diary", diarySchema)
 async createDiary(diary: any) {
-  const tone = await this.tone_analyzer.tone({ text: diary.body });
+  const tone = await this.tone_analyzer.tone({ text: diary.post });
   diary.tones = tone.document_tone.tones;
 
   return this.diaryStore.createDiary(diary);
