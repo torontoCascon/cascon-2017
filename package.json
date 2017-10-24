@@ -1,0 +1,38 @@
+{
+  "name": "cascon-2017",
+  "version": "1.0.0",
+  "description": "CASCON 2017 Workshop - API economy made easy with LoopBack 4",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsc && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/virkt25/cascon-2017.git"
+  },
+  "keywords": [
+    "loopback4",
+    "tutorial",
+    "cascon"
+  ],
+  "author": "Taranveer Virk",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/virkt25/cascon-2017/issues"
+  },
+  "homepage": "https://github.com/virkt25/cascon-2017#readme",
+  "dependencies": {
+    "@loopback/context": "^4.0.0-alpha.14",
+    "@loopback/core": "^4.0.0-alpha.16",
+    "@loopback/openapi-spec": "^4.0.0-alpha.10",
+    "@loopback/rest": "^4.0.0-alpha.3",
+    "@types/bluebird": "^3.5.16",
+    "@types/watson-developer-cloud": "^2.40.0",
+    "bluebird": "^3.5.1",
+    "watson-developer-cloud": "^2.41.1"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.46"
+  }
+}
