@@ -5,7 +5,16 @@ CASCON 2017 Workshop Tutorial
 This is a tutorial for LoopBack 4 that will show you how to get started creating LoopBack 4 Applications. This will be presented at CASCON 2017. The application we'll be creating is a simple Diary application to write your daily thoughts but we'll get a tone analysis from [Watson Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/) for each diary entry to understand your mood and to be able to search for entries by mood.
 
 ## Tutorial
-The `master` branch represents the complete and functioning version of the tutoria. To run it you would just need to add a file called `creds.ts` as specified in `step-05` branch. 
+The `master` branch represents the complete and functioning version of the tutoria. To run it you would just need to add a file called `creds.ts` as specified in `step-05` branch.
+
+You should have the following packages dependencies install globally to follow along with this tutorial:
+
+- Node 8.X.X [Installer](https://nodejs.org/en/download/current/)
+- TypeScript 2.5 (you can install by running the following command after installing Node):
+
+```
+npm i -g typescript
+```
 
 You can follow along this tutorial step by step by switching between the different step branches.
 
