@@ -26,7 +26,7 @@ export class DiaryController {
   // Create New Diary Entry
   @post('/')
   @param.body('diary', diarySchema) // User should provide us JSON matching this schema we defined earlier
-  createDiary(diary: any): Diary {
+  createDiary(diary: Diary): Diary {
     return this.diaryStore.createDiary(diary);
   }
 

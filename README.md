@@ -76,7 +76,7 @@ export class DiaryDataStore {
   }
 
   // We assign an id and save the diary here
-  createDiary(diary: any): Diary {
+  createDiary(diary: Diary): Diary {
     diary.id = this.id;
     this.diaries[this.id] = diary;
     this.id++;
@@ -138,7 +138,7 @@ getDiaryById(id: number): Diary {
 // Create New Diary Entry
 @post('/')
 @param.body('diary', diarySchema) // User should provide us JSON matching this schema we defined earlier
-createDiary(diary: any): Diary {
+createDiary(diary: Diary): Diary {
   return this.diaryStore.createDiary(diary);
 }
 
