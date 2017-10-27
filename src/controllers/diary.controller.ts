@@ -33,7 +33,7 @@ export class DiaryController {
     if (!tone) return diaries;
 
     tone = tone.toLowerCase();
-    let result: any = [];
+    let result: Diary[] = [];
     for (const diary of diaries) {
       for (const diaryTone of diary.tones) {
         if (diaryTone.tone_name.toLowerCase() === tone) {
@@ -55,7 +55,7 @@ export class DiaryController {
   // Create New Diary Entry
   @post('/')
   @param.body('diary', diarySchema)
-  async createDiary(diary: any) {
+  async createDiary(diary: Diary) {
     const tone = await this.tone_analyzer.tone({text: diary.post});
     diary.tones = tone.document_tone.tones;
 
