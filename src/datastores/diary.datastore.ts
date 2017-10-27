@@ -19,7 +19,7 @@ export class DiaryDataStore {
   }
 
   // We assign an id and save the diary here
-  createDiary(diary: any): Diary {
+  createDiary(diary: Diary): Diary {
     diary.id = this.id;
     this.diaries[this.id] = diary;
     this.id++;
