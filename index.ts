@@ -4,13 +4,13 @@ import {RestServer} from '@loopback/rest';
 (async function main() {
   const app = new DiaryApp();
 
-  await app.start().catch(err => {
+  // Catch any startup errors
+  try {
+    await app.start();
+  } catch (err) {
     console.error('Cannot start the application! ', err);
     process.exit(1);
-  });
+  }
 
-  const server = await app.getServer(RestServer);
-  const port = await server.get('rest.port');
-
-  console.log(`Application started at localhost:${port}`);
+  console.log('App started');
 })();
