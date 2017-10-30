@@ -54,17 +54,14 @@ import {RestServer} from '@loopback/rest';
   const app = new DiaryApp();
 
   // Catch any startup errors
-  await app.start().catch(err => {
-    console.error('Cannot start the application! ', err);
+  try {
+  	await app.start();
+  } catch (err) {
+  	console.error('Cannot start the application! ', err);
     process.exit(1);
-  });
+  }
 
-  // Get an instance of the running default server
-  const server = await app.getServer(RestServer);
-  // Get the port the server is listening on
-  const port = await server.get('rest.port');
-
-  console.log(`Application started at localhost:${port}`);
+  console.log('App started');
 })();
 ```
 
