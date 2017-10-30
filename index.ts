@@ -1,22 +1,27 @@
-import { Application } from "@loopback/core";
-import { RestComponent, get } from "@loopback/rest";
+import {Application} from '@loopback/core';
+import {RestComponent, get} from '@loopback/rest';
 
 class DiaryController {
-  @get("/")
+  @get('/')
   helloWorld() {
-    return "Hello LoopBack";
+    return 'Hello LoopBack';
   }
 }
 
 class DiaryApp extends Application {
   constructor() {
     super({
-      components: [RestComponent]
+      components: [RestComponent],
     });
 
     this.controller(DiaryController);
   }
 }
 
-const app = new DiaryApp();
-app.start();
+async function main() {
+  const app = new DiaryApp();
+  await app.start();
+  console.log('App started');
+}
+
+main();

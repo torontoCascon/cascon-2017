@@ -45,8 +45,13 @@ class DiaryApp extends Application {
 5. Last but not least, we'll create an instance of our `DiaryApp` and start it as follows:
 
 ```ts
-const app = new DiaryApp();
-app.start();
+async function main() {
+  const app = new DiaryApp();
+  await app.start();
+  console.log('App started');
+}
+
+main();
 ```
 
 ## Running you application
