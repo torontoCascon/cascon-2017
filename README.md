@@ -2,7 +2,7 @@
 CASCON 2017 Workshop Tutorial
 
 ## Overview
-This is a tutorial for LoopBack 4 that will show you how to get started creating LoopBack 4 Applications. This will be presented at CASCON 2017. The application we'll be creating is a simple Diary application to write your daily thoughts but we'll get a tone analysis from [Watson Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/) for each diary entry to understand your mood and to be able to search for entries by mood.
+This is a tutorial for [LoopBack 4](http://loopback.io/doc/en/lb4/) that will show you how to get started creating [LoopBack 4](http://loopback.io/doc/en/lb4/) Applications. This will be presented at CASCON 2017. The application we'll be creating is a simple Diary application to write your daily thoughts but we'll get a tone analysis from [Watson Tone Analyzer](https://www.ibm.com/watson/services/tone-analyzer/) for each diary entry to understand your mood and to be able to search for entries by mood.
 
 ## Pre-requisites
 You should have the following packages dependencies install globally to follow along with this tutorial:
