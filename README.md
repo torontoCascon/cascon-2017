@@ -75,4 +75,4 @@ npm start
 2. The server will start with a default port of `3000`. If you visit `localhost:3000` from your browser, you should see `Hello LoopBack`.
 
 ## Next Steps
-__Congrats! You've completed Step 3 - Refactoring.__ Move on to step 4 by [clicking here](https://github.com/virkt25/cascon-2017/tree/step-04).
+__Congrats! You've completed Step 3 - Refactoring.__ Move on to step 4 by [clicking here](https://github.com/torontoCascon/cascon-2017/tree/step-04).
