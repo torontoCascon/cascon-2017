@@ -49,4 +49,4 @@ npm i --save-dev @types/node
 }
 ```
 
-__Congrats! You've completed Step 1 - Project Setup.__ Move on to step 2 by [clicking here](https://github.com/virkt25/cascon-2017/tree/step-02).
+__Congrats! You've completed Step 1 - Project Setup.__ Move on to step 2 by [clicking here](https://github.com/torontoCascon/cascon-2017/tree/step-02).
