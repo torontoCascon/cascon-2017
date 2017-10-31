@@ -19,9 +19,11 @@ The `master` branch represents the complete and functioning version of the tutor
 
 You can follow along this tutorial step by step by switching between the different step branches.
 
+The presentation used for the workshop is also available [here as a PDF](https://github.com/torontoCascon/cascon-2017/blob/master/CASCON%202017%20Workshop.pdf).
+
 ### Step Branches
-1. [Step 1 - Project Setup](https://github.com/virkt25/cascon-2017/tree/step-01)
-2. [Step 2 - Hello World](https://github.com/virkt25/cascon-2017/tree/step-02)
-3. [Step 3 - Refactoring](https://github.com/virkt25/cascon-2017/tree/step-03)
-4. [Step 4 - Basic Diary Application](https://github.com/virkt25/cascon-2017/tree/step-04)
-5. [Step 5 - Making it Cognitive](https://github.com/virkt25/cascon-2017/tree/step-05)
+1. [Step 1 - Project Setup](https://github.com/torontoCascon/cascon-2017/tree/step-01)
+2. [Step 2 - Hello World](https://github.com/torontoCascon/cascon-2017/tree/step-02)
+3. [Step 3 - Refactoring](https://github.com/torontoCascon/cascon-2017/tree/step-03)
+4. [Step 4 - Basic Diary Application](https://github.com/torontoCascon/cascon-2017/tree/step-04)
+5. [Step 5 - Making it Cognitive](https://github.com/torontoCascon/cascon-2017/tree/step-05)
