@@ -8,14 +8,14 @@ This is a tutorial for LoopBack 4 that will show you how to get started creating
 1. We're going to start by creating a new directory for our project. Let's call this `cascon-diary`. *This will be referred to as the __project directory__.* You can do so by running the following command:
 
 ```sh
-mkdir cascon-diary
+mkdir cascon-2017
  ```
 
 2. Now enter our directory and initialize `npm` in it by running the following commands. __NOTE:__ You will be prompted by a series of questions with a corresponding __default__ answer in `( )`. We will stick with the default answers for all questions except:
  - __entry point: (index.js)__: `dist/index.js`
 
 ```sh
-cd cascon-diary
+cd cascon-2017
 npm init
 ```
 
