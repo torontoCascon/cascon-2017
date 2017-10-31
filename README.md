@@ -165,4 +165,4 @@ npm start
 3. Visit `localhost:3000/swagger-ui` to be able to see a Swagger Docs interface that will let you try out any of the requests.
 
 ## Next Steps
-__Congrats! You've completed Step 4 - Basic Diary Application.__ Move on to step 5 by [clicking here](https://github.com/virkt25/cascon-2017/tree/step-05).
+__Congrats! You've completed Step 4 - Basic Diary Application.__ Move on to step 5 by [clicking here](https://github.com/torontoCascon/cascon-2017/tree/step-05).
