@@ -14,7 +14,7 @@ This is a tutorial for LoopBack 4 that will show you how to get started creating
 import {Application} from '@loopback/core';
 // RestComponent - provides us with a RestServer (HTTP Protocol) 
 // get - HTTP GET Request Decorator
-import {RestComponent, get} from '@loopback/rest'
+import {RestComponent, get} from '@loopback/rest';
 ```
 
 3. Now we'll define a controller class that is responsible for receives a request and creates a response. A simple hello world controller looks as follows:
