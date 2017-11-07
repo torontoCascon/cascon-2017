@@ -16,8 +16,6 @@ export class DiaryApp extends Application {
       .toClass(DiaryDataStore)
       .inScope(BindingScope.SINGLETON);
 
-    this.bind('tone_analyzer.username').to(creds.username);
-    this.bind('tone_analyzer.password').to(creds.password);
-    this.bind('tone_analyzer.version').to(creds.version);
+    this.bind('tone_analyzer.creds').to(creds);
   }
 }

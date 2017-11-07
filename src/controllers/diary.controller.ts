@@ -12,14 +12,12 @@ export class DiaryController {
   constructor(
     @inject('datastores.diary') public diaryStore: DiaryDataStore,
     @inject(RestBindings.Http.RESPONSE) public res: ServerResponse,
-    @inject('tone_analyzer.username') username: string,
-    @inject('tone_analyzer.password') password: string,
-    @inject('tone_analyzer.version') version: string,
+    @inject('tone_analyzer.creds') creds: any,
   ) {
     this.tone_analyzer = new ToneAnalyzerV3({
-      username: username,
-      password: password,
-      version_date: version,
+      username: creds.username,
+      password: creds.password,
+      version_date: creds.version,
     });
 
     this.tone_analyzer.tone = Promise.promisify(this.tone_analyzer.tone);
